@@ -4,58 +4,54 @@ import "fmt"
 
 func main() {
 	arr := []int{4, 0, 3, 9, 1}
-	h := Heap{}
-	h.HeapSort(arr)
-
+	HeapSort(arr)
 	fmt.Println(arr)
 }
 
-type Heap struct {
+func Left(index int) int {
+	return (index * 2) + 1
 }
 
-func (*Heap) Left(root int) int {
-	return (root * 2) + 1
+func Right(index int) int {
+	return (index * 2) + 2
 }
 
-func (*Heap) Right(root int) int {
-	return (root * 2) + 2
+func Parent(index int) int {
+	return ((index + 1) / 2) - 1
 }
 
-func (h *Heap) BuildHeap(array []int) {
-	l := len(array)
-	for i := l / 2; i >= 0; i-- {
-		h.Heapify(array, i, l)
+func HeapSort(array []int) {
+	BuildMaxHeap(array)
+	for length := len(array); length > 1; length-- {
+		HeapExtractMax(array, length)
 	}
 }
 
-func (h *Heap) Heapify(array []int, root, length int) {
-	var max = root
-	var l, r = h.Left(root), h.Right(root)
+func BuildMaxHeap(array []int) {
+	l := len(array)
+	for i := l / 2; i >= 0; i-- {
+		MaxHeapify(array, i, l)
+	}
+}
+
+func HeapExtractMax(array []int, length int) {
+	lastIndex := length - 1
+	array[0], array[lastIndex] = array[lastIndex], array[0]
+	MaxHeapify(array, 0, lastIndex)
+}
+
+func MaxHeapify(array []int, index, length int) {
+	max := index
+	l, r := Left(index), Right(index)
 
 	if l < length && array[l] > array[max] {
 		max = l
 	}
-
 	if r < length && array[r] > array[max] {
 		max = r
 	}
-
-	if max != root {
-		array[root], array[max] = array[max], array[root]
-		h.Heapify(array, max, length)
-	}
-}
-
-func (heap *Heap) RemoveTop(array []int, length int) {
-	var lastIndex = length - 1
-	array[0], array[lastIndex] = array[lastIndex], array[0]
-	heap.Heapify(array, 0, lastIndex)
-}
-
-func (heap *Heap) HeapSort(array []int) {
-	heap.BuildHeap(array)
-
-	for length := len(array); length > 1; length-- {
-		heap.RemoveTop(array, length)
+	if max != index {
+		array[index], array[max] = array[max], array[index]
+		MaxHeapify(array, max, length)
 	}
 }
