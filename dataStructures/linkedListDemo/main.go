@@ -8,6 +8,7 @@ import (
 func main() {
 	ll := linkedList.LinkedList{}
 	ll.AddFirst(100)
+	fmt.Println(ll.Find(100))
 	ll.AddFirst(200)
 	ll.AddFirst(300)
 	ll.Iterate()

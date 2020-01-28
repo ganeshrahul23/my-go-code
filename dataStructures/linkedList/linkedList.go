@@ -56,23 +56,19 @@ func (l *LinkedList) Len() int {
 	if l.head == nil {
 		return 0
 	}
-	tempNode := l.head
-	i := 1
-	for tempNode.next != nil {
-		tempNode = tempNode.next
-		i++
+	currentNode := l.head
+	length := 1
+	for ; currentNode.next != nil; length++ {
+		currentNode = currentNode.next
 	}
-	return i
+	return length
 }
 
 func (l *LinkedList) Find(data int) int {
 	node := l.head
 	index := -1
-	for ; node.next != nil; node = node.next {
+	for ; node.next != nil && node.data != data; node = node.next {
 		index++
-		if node.data == data {
-			return index
-		}
 	}
 	if node.data == data {
 		return index + 1
