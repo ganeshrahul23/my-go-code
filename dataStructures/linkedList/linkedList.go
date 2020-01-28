@@ -83,3 +83,22 @@ func (l *LinkedList) RemoveTail() {
 	}
 	node.next = nil
 }
+
+func (l *LinkedList) ReverseList() {
+	if l.head == nil || l.head.next == nil {
+		return
+	}
+	var prevNode, nextNode, currentNode *node
+	currentNode = l.head
+	for currentNode != nil {
+		nextNode = currentNode.next
+		currentNode.next = prevNode
+		prevNode = currentNode
+		currentNode = nextNode
+	}
+	l.head = prevNode
+}
+
+func (l *LinkedList) MergeSortedList(list LinkedList) {
+
+}
