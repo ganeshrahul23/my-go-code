@@ -100,5 +100,53 @@ func (l *LinkedList) ReverseList() {
 }
 
 func (l *LinkedList) MergeSortedList(list LinkedList) {
+	nodeA, nodeB := l.head, list.head
+	newNode := &node{}
+	l.head = newNode
+	for {
+		if nodeA == nil {
+			newNode.next = nodeB
+			break
+		}
+		if nodeB == nil {
+			newNode.next = nodeA
+			break
+		}
+		if nodeA.data < nodeB.data {
+			newNode.next = nodeA
+			nodeA = nodeA.next
+		} else {
+			newNode.next = nodeB
+			nodeB = nodeB.next
+		}
+		newNode = newNode.next
+	}
+	l.head = l.head.next
+}
 
+func MergeSortedList(list1 LinkedList, list2 LinkedList) *LinkedList {
+	nodeA, nodeB := list1.head, list2.head
+	ll := LinkedList{}
+	newNode := &node{}
+	ll.head = newNode
+	for {
+		if nodeA == nil {
+			newNode.next = nodeB
+			break
+		}
+		if nodeB == nil {
+			newNode.next = nodeA
+			break
+		}
+		if nodeA.data < nodeB.data {
+			newNode.next = nodeA
+			nodeA = nodeA.next
+		} else {
+			newNode.next = nodeB
+			nodeB = nodeB.next
+		}
+		newNode = newNode.next
+	}
+	ll.head = ll.head.next
+	return &ll
 }
